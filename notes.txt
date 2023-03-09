@@ -1,0 +1,1689 @@
+248. Setting Up the Sign Up Page
+
+use node and express to setup
+screen checklist.
+
+CHALLENGE
+
+create project folder Newslsetter-Signup
+create app.js
+signup.html
+success.html
+failure.html
+init npm with default options
+install body-parser, express, and request npm modules in new proj.
+
+require installed modules in app.js
+create nwe experss app and set it to listen on port 3000
+log "server is running on port 3000".
+
+SH SOLUTION
+
+Steven@DESKTOP-3C5BQG7 MINGW64 ~/desktop/Newsletter-Signup
+
+$ mkdir NewsLetter-Signup
+$ cd NewsLetter-Signup/
+$ ls
+$ touch app.js
+$ touch signup.html success.html failure.html
+$ ls
+app.js  failure.html  signup.html  success.html
+
+npm init
+npm install body-parser
+npm install express
+.atom
+
+sh: i pasted this in.
+
+/*jshint esversion: 6 */
+
+const express = require("express");
+const https = require("https");
+const bodyParser = require("body-parser");
+const app = express();
+
+
+
+app.listen(3000, function(){
+console.log("Server is running on port 3000");
+});
+
+in hyper
+nodemon app.js
+
+unfinished
+
+0:19 / 20:52
+
+SOLUTION
+
+lot node js express use app.js
+npm init installs package.json
+npm install body-parser extpress request
+sh. install request depreciated. i don't think you need to.
+
+rem bootstart can shorten time.
+https://getbootstrap.com/docs/5.3/examples/
+get simple forms for html
+https://getbootstrap.com/docs/5.3/examples/sign-in/
+right click view page source html
+copy and paste into signup.html
+
+right click and copy full path, not look same
+sh. and image missing.
+fonts and buttons not correct because
+not enabled
+because bootstrap included as local failure
+<link href="/docs/5.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+don't have that, get it here:
+https://getbootstrap.com/docs/5.3/getting-started/introduction/
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+replace previous link with that
+refresh and lot bs enabled but not look same
+because stylesheet, get it by link from view page source previous
+<link href="sign-in.css" rel="stylesheet">
+click link get to:
+https://getbootstrap.com/docs/5.3/examples/sign-in/sign-in.css
+paste into and make styles.css, change link from sign-in.ccc to styles.css
+sign-in.css
+from this:
+ <link href="sign-in.css" rel="stylesheet">
+to this:
+<link href="styles.css" rel="stylesheet">
+
+sh. to get image, download the svg to newsletter-signup and then open it and copy full path.
+then change the signup.html line
+<img class="mb-4" src="C:\Users\Steven\Desktop\Newsletter-Signup\bootstrap-logo.svg" alt="" width="72" height="57">
+to the above from whatever it was, not get image.
+
+project log
+Bootcamp. Up to: 248. Setting Up the Sign Up Page. 7:03 / 20:52.
+
+23/02
+
+modify words, inputs and buttons to project.
+
+change html this:
+<!-- <title>Signin Template · Bootstrap v5.3</title> -->
+to Newsletter Signup
+change the svg address to folder images\your image.
+eg: website superstars logo.
+
+8:23
+
+change
+<h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+to
+<h1 class="h3 mb-3 fw-normal">Signup to My Newsletter</h1>
+
+delete
+
+<label for="floatingInput">Email address</label>
+<label for="floatingPassword">Password</label>
+<div class="checkbox mb-3">
+
+for changed to this with types changed to text and email.
+text changed too.
+
+<input type="text" class="form-control" placeholder="First Name" required autofocus>
+<input type="text" class="form-control" placeholder="Last Name" required>
+<input type="email" class="form-control" placeholder="Email Address" required>
+
+end code.
+required autofocus (blue around)
+and required,
+added.
+
+change styles.css from this
+
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+
+  to this:
+
+  .top {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  .middle {
+    border-radius: 0;
+    margin-bottom: -1px;
+  }
+  .bottom {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+
+
+
+  <input type="text" class="form-control top" placeholder="First Name" required autofocus>
+  <input type="text" class="form-control middle" placeholder="Last Name" required>
+  <input type="email" class="form-control bottom" placeholder="Email Address" required>
+
+added top, middle bottom after form-control.
+
+end code.
+
+this makes the forms rounded top bottom and middle square.
+
+it's now static page.
+need server get method.
+and for express
+
+CHALLENGE
+
+setup get method for home route and
+get route to signup to test localhost:3000
+
+SH SOLUTION
+
+app.get("/", function(req,res){
+    res.sendFile(__dirname+ "/signup.html");
+});
+
+correct.
+
+but image and css is gone.
+because bs stylesheet is from remote
+but custom is from local, same with images.
+for server to serve static files (css, images),
+must use special function called static.
+
+app.use(express.static("public")); // public is the folder
+
+app.get("/", function(req,res){
+    res.sendFile(__dirname+ "/signup.html");
+});
+
+inside newsletter... new folder public. add folder class,
+place styles.css in there, and images folder there in public.
+then usign app.use static... should be able to refer to the static files
+by a relative url, relative to the public folder.
+do
+signup.html
+    <link href="css/styles.css" rel="stylesheet">
+for images
+    <img class="mb-4" src="images\bootstrap-logo.svg" alt="" width="72" height="57">
+    wasn't css\images, not sure why.
+now it's rendered.
+
+CHALLENGE
+
+program the post route
+use body-parser to grab data from form and console log from server.
+
+app.js code (using bodyParser, app post with vars, ):
+
+/*jshint esversion: 6 */
+
+const bodyParser = require("body-parser");
+const express = require("express");
+
+const app = express();
+
+app.use(express.static("public"));
+app.use(bodyParser.urlencoded({extended: true}));
+
+app.get("/", function(req,res){
+    res.sendFile(__dirname+ "/signup.html");
+});
+
+app.post("/", function(req, res){
+
+  var firstName = req.body.fName;
+  var lastName = req.body.lName;
+  var email = req.body.email;
+  console.log(firstName, lastName, email);
+});
+
+app.listen(3000, function(){
+console.log("Server is running on port 3000");
+});
+
+html for values (name="..."):
+
+<div class="form-signin">
+  <input type="text" name="fName" class="form-control top" placeholder="First Name" required autofocus>
+  <input type="text" name="lName" class="form-control middle" placeholder="Last Name" required>
+  <input type="email" name="email" class="form-control bottom" placeholder="Email" required>
+</div>
+
+AND ANGELA SAYS TO KEEP A COPY OF THE APP.JS CODE BECAUSE IT'S REPEATED IN
+ALL NODE.JS SERVER APPLICATIONS.
+
+if input on form, nothing on hyper,
+because html form doesn't have action.
+for post req to happen specify method as post and action to home route.
+
+change form
+<form class="text-centre " action="/" class="form-signin" method="POST">
+...
+</form>
+so that when click submit, action gets posted and picked up in the
+
+app.post("/", function(req, res){
+
+  var firstName = req.body.fName;
+  var lastName = req.body.lName;
+  var email = req.body.email;
+  console.log(firstName, lastName, email);
+});
+
+action is the location (home route action="/")
+
+hyper
+a b a@b.com
+apple mac apple@mac.com
+
+so it gets logged in hyper, bodyparser working,
+form submits data in the inputs to the home route using post request.
+
+now done prep work, getting data in teh inputs.
+
+next lesson
+
+set page up with mailchimp api send this data to their servers.
+
+249. Posting Data to Mailchimp's Servers via their API
+
+google mailchimp.API
+https://mailchimp.com/developer/
+get started
+get api key to authenticate self with their servers, that's security.
+signup mailchimp account.
+mailchimp.com sign up for free
+free plan, don't have list email subs, not right now for marketing.
+login. get api key.
+
+i made password...
+
+https://mailchimp.com/en-gb/help/alternative-physical-address-ideas/?_gl=1*ir4457*_up*MQ..*_ga*ODQxMzIyMTgzLjE2NzcyMzM0NDk.*_ga_293QT5WVV9*MTY3NzIzMzQ0OC4xLjAuMTY3NzIzMzQ0OC4wLjAuMA..
+stuff about including address for antispam laws.
+i don't want them to have my address.
+give it anyway.
+https://us17.admin.mailchimp.com/account/api/
+
+Initialization Code
+
+
+
+MailchimpSDK.initialize(token: 469520a307eb3de7a6a38ea136c501a9-us17)
+var contact: Contact = Contact(emailAddress: "Insert Email Here")
+MailchimpSDK.createOrUpdate(contact: contact) { result in
+    switch result {
+    case .success:
+        print("Successfully added or updated contact")
+    case .failure(let error):
+        print("Error: \(error.localizedDescription)")
+    }
+}
+
+Merge Fields
+
+
+--------------------
+Merge Tag: FNAME
+Name: First Name
+Type: text (string)
+--------------------
+Merge Tag: LNAME
+Name: Last Name
+Type: text (string)
+--------------------
+Merge Tag: ADDRESS
+Name: Address
+Type: address
+--------------------
+Merge Tag: PHONE
+Name: Phone Number
+Type: phone (string)
+--------------------
+Merge Tag: BIRTHDAY
+Name: Birthday
+Type: birthday (string)
+
+
+go api ref from mailchip developers
+// Api Key: 469520a307eb3de7a6a38ea136c501a9-us17
+
+
+https://mailchimp.com/developer/marketing/api/?_gl=1*1xqqsg5*_up*MQ..*_ga*MTI1NDEzMzk5Ny4xNjc3MjM0MTcw*_ga_N5HD1RTH6E*MTY3NzIzNDE2OS4xLjAuMTY3NzIzNDE2OS4wLjAuMA..
+1st go list section, can create, read, edit and delete. we want create.
+need list ide and
+
+this part
+
+https://mailchimp.com/developer/marketing/api/abuse-reports/
+Batch subscribe or unsubscribe
+Expand
+POST
+/lists/{list_id}
+Batch subscribe or unsubscribe list members.
+need list id, and provide members in body of request.
+how?
+get list id
+mailchimp.com/audience/manage audience/ settings to get unique id.
+https://us17.admin.mailchimp.com/lists/settings/defaults?id=1360424
+sh. i think it's unique id:
+// List ID: 92da9588f2
+
+next send req to mailchimp, go mailchimp get started.
+code examples
+
+project log: Up to:
+249. Posting Data to Mailchimp's Servers via their API. 4:45 / 18:37
+3/4 h
+
+look at data section, type of data they send.
+it's flatpack json, strings delineated (described) with curly braces and colons.
+
+sh. the site has changed so i might have to do somethign different.
+move on.
+she says there is a code example section.
+curl --request
+q&a
+https://mailchimp.com/developer/marketing/api/lists/
+
+https://mailchimp.com/developer/marketing/api/lists/batch-subscribe-or-unsubscribe/
+
+https://mailchimp.com/developer/marketing/api/lists/
+https://mailchimp.com/developer/marketing/api/abuse-reports/
+
+add this:
+var data = {
+  members: [{
+    email_address: email,
+    status: "subscribed",
+    merge_fields: {
+      FNAME: firstName,
+      LNAME: lastName,
+    } //see most contacts come with fname lname in call caps. see documenation
+  }]
+}
+this is the object in js.
+we need json.
+const jsonData = JSON.stringify(data);// send to mailchimp.
+change vars to const because they won't change.
+
+next make request.
+node js documentation http module want to post (not just get),
+https.request
+add url and options.
+
+according to node.js documentation
+must save data in const,
+then use const req to send to mailchimp servers
+using request.write()
+
+check hyper no errors, localhost:3000, try to sign up.
+she went to localhost:3000, but that wasn't the address.
+it was:
+signup.html?
+do 3000 anyway.
+i got error:
+C:\Users\toshiba\desktop\Newsletter-Signup\app.js:42
+const.options = {
+     ^
+also in resources
+gives this link
+https://mailchimp.com/developer/marketing/docs/fundamentals/
+https://mailchimp.com/developer/marketing/api/
+https://mailchimp.com/developer/marketing/api/lists/
+
+to get solutions
+https://github.com/sdkdeepa/Udemy-web-bootcamp
+
+angela says if go to mailchimp audience would see
+new signup.
+i get:
+type: 'https://mailchimp.com/developer/marketing/docs/errors/',
+title: 'API Key Invalid',
+status: 401,
+detail: "Your API key may be invalid, or you've attempted to access the wrong datacenter.",
+instance: 'cb62f814-1579-6fc2-40e7-e005c86d80dd'
+}
+
+problem with the api key.
+sh: move on.
+also css layout gone back.
+what was the othe rpage she used?
+
+there are errors in the github example. eg: no ;
+
+sh: possible api key might be wrong or written wrong.
+or maybe authentication is wrong or i
+have wrong auth for uk. should be uk or eu.
+
+if it worked, hyper would show new member...
+can add a new person.
+look again then more.
+
+website has small faults.
+might have feedback and success page.
+
+sh: finished but it didn't work.
+get the idea and move on.
+don't waste any more time on that.
+
+project log:
+Up to the end of: 249. Posting Data to Mailchimp's Servers via their API.
+2h.
+
+250. Adding Success and Failure Pages
+
+mustn't let page time-out.
+
+CHALLENGE
+how figure out what response code back,
+if 200, send info.
+
+sh: can find the other solution to this module. not today.
+
+if not 200, send another message.
+
+skip because she already wasted 2h.
+
+solution
+tap response and get status,
+
+The Udemy Affiliate Program is run in Linkshare and other affiliate networks.
+https://www.udemy.com/affiliate/
+
+sh: add the loop in after const request variable,
+const request = https.request(url, options, function(response){
+
+if (response.statusCode === 200) {
+  res.send("You have subscribed!");
+} else {
+  res.send("There was an error with signing up, please try again!");
+}
+
+response.on("data", function(data){
+  console.log(JSON.parse(data));
+  })
+});
+end code. not sure if it works.
+
+sh. even though it doesn't work, the message does work.
+also in hyper, message key not any good.
+
+she got subsribed.
+but eg: if api key wrong or list key wrong.
+message there was an error with signing up...
+
+but the answer is too plain.
+use bs to jazz up.
+success.html and failure.html.
+include some bootstrap code.
+bs website components. add jumbotron.
+
+https://getbootstrap.com/docs/4.3/components/jumbotron/
+<div class="jumbotron">
+  <h1 class="display-4">Nope</h1>
+  <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+  <hr class="my-4">
+  <p>There was a problem signing you up. Please try again.</p>
+</div>
+another in the success html.
+
+<h1 class="display-4">Awesome</h1>
+<p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+<hr class="my-4">
+<p>You've been signed up to the newsletter, look forward to lots of awesome conent.</p>
+
+to use bs, need bs stylesheet.
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+sh: or from site:
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+yes it's the 2nd one. cd
+project log.
+4:11 / 8:55
+
+
+
+CHALLENGE
+
+how to send succcess and other pages.
+
+sh. skip the challenges in this.
+
+SOLUTION
+
+if (response.statusCode === 200) {
+    res.sendFile(__dirname + "/success.html");
+} else {
+  res.sendFile(__dirname + "failure.html");
+}
+
+code:
+// a js object. then authenticae (documents) //it's any string, colon to separate then api ke. // in auth. make sure regionmatches (us)
+const request = https.request(url, options, function(response){
+
+if (response.statusCode === 200) {
+    res.sendFile(__dirname + "/success.html");
+} else {
+  res.sendFile(__dirname + "/failure.html");
+}
+
+response.on("data", function(data){
+  console.log(JSON.parse(data));
+  })
+});
+
+request.write(jsonData);
+request.end();
+});
+
+end code.
+this sends to the page but hyper says wrong key...
+it won't go to the correct page, possibly because
+of api key... yes.
+move on.
+can get the correct way elsewhere like youtube.
+sh. here are youtube links:
+https://www.youtube.com/results?search_query=api+mailchimp+mailing+list
+end links.
+
+continue.
+
+other thing to address.
+nice if they didn't sign up, have button try again back to original page.
+
+using app.js add form.
+
+<p>There was a problem signing you up. Please try again.</p>
+<form class="" action="/" method="post">
+  <button type="submit" name="button">Try Again</button >
+</form>
+
+5:57 / 8:55
+1h
+
+give form bootstrap classes.
+  <button class="btn btn-lg btn-warning" type="submit" name="button">Try Again</button >
+make the button work.
+
+// below post request for the home route, add another one.
+// sends to the listner then to app.get home page.
+app.post("/failure", function(req, res){
+  res.redirect("/");
+})
+
+app.post("/failure", function (req, res){
+  res.redirect("/");
+});
+
+
+
+
+sh. however, that didn't work.
+move on.
+
+q&a solutions.
+Says the code is out of date compared to mailchimp code.
+https://www.udemy.com/course/the-complete-web-development-bootcamp/learn/lecture/18125213#questions/13759466
+code saved here:
+student solutions.txt
+I did not bother to try it.
+
+next lesson how to put on internet and not local,
+and to give a link and sign up.
+make a real web app on the world wide web.
+
+= 1h 17m.
+
+251. Deploying Your Server with Heroku
+
+can't use github pages... that only use support static pages,
+unless you make your own 24h server.
+cost to buy, and maintain software...
+says lots of work.
+rent server from someone else. get them to do the work.
+
+one of best is heroku.
+rent for free.
+create up to 5 projects for free.
+sh. that's very good since can install wordpress there.
+
+sign up.
+heroku message.
+heroku means hero, so it's human.
+
+Use Salesforce Authenticator to verify your identity and sensitive transactions. Authenticator is a free app that runs on iOS or Android mobile devices.
+
+Download Salesforce Authenticator from the App Store or Google Play and install it on your mobile device.
+Open the app and tap Add an Account
+The app shows you a unique two-word phrase. Enter the phrase.
+Two-Word Phrase
+
+sh. the heroku is not free anymore,
+and the saleforce authenticator is not free.
+
+students recommend Glitch
+https://www.udemy.com/course/the-complete-web-development-bootcamp/learn/lecture/18125215#questions/18788284
+
+and tutorial.
+https://youtu.be/3hVf4Giy5nc
+
+i think just do the module and don't use heroku.
+just take notes and move on.
+no reviews on scam advisor.
+says must join other things.
+
+sh: maybe use the service leon noel recommends.
+https://www.wpbeginner.com/showcase/best-free-website-hosting-compared/
+move on. this is another waste of time.
+i don't need a hosting site. i have xampp.
+
+project log
+1:45 / 18:38
+= 1h 17m. = 1/2 h.
+
+
+27/02
+https://googiehost.com/blog/free-database-hosting/
+https://geshan.com.np/blog/2021/01/free-nodejs-hosting/#:~:text=Google%20Cloud%20Run%20%2D%20You%20can,Cloud%20Registry%20and%20other%20tools.
+https://codedamn.com/news/nodejs/free-hosting-website
+https://codeless.co/best-nodejs-hosting/
+https://blog.logrocket.com/3-free-heroku-alternatives-deploy-node-js/
+Building our test app
+Deploying to Render
+Deploying to Railway
+Deploying using Fly.io
+Other deployment options
+https://render.com/docs/deploy-node-express-app#:~:text=You%20can%20deploy%20a%20Node,%3A%2F%2Fexpress.onrender.com.
+https://render.com/docs/deploy-wordpress
+https://render.com/pricing free stuff
+includes db and api's. i think use it.
+
+
+watching video.
+see paper timestamp img notes.
+
+
+
+28/02
+
+sh. joining render (see):
+https://blog.logrocket.com/3-free-heroku-alternatives-deploy-node-js/
+Render.com
+joined using my github account.
+
+https://github.com/steven-14/bootcamp-newsletter
+
+README.md
+bootcamp-newsletter
+This is the repository for a newsletter-signup api I deployed to render.com
+
+name: bootcamp-newsletter
+start command: start newsletter
+message:
+Feb 28 10:54:59 AM  ==> Cloning from https://github.com/steven-14/bootcamp-newsletter...
+Feb 28 10:54:59 AM  ==> Checking out commit f8f03acc183ee62571c67f8bfdb1162c55dd9838 in branch main
+Feb 28 10:55:04 AM  ==> Running build command 'bundle install'...
+Feb 28 10:55:04 AM  Your RubyGems version (3.0.3.1) has a bug that prevents `required_ruby_version` from working for Bundler. Any scripts that use `gem install bundler` will break as soon as Bundler drops support for your Ruby version. Please upgrade RubyGems to avoid future breakage and silence this warning by running `gem update --system 3.2.3`
+Feb 28 10:55:04 AM  Could not locate Gemfile
+Feb 28 10:55:04 AM  ==> Build failed 😞
+Feb 28 10:55:04 AM  ==> Generating container image from build. This may take a few minutes...
+end message.
+
+sh. it might work for now. move on.
+atom is not going to be updated. maybe that's why.
+update it in vs or something. not now.
+
+
+continue
+
+From this screen, we wait for the deployment to complete, which can take a while. The URL for when it is done can be found in the upper left hand corner:
+
+https://bootcamp-newsletter.onrender.com/
+error 502
+Bad Gateway Request ID: 7a08b3976651386b-LHR
+If you are a visitor:
+
+Try again later or contact the site owner.
+If you are the site owner, your application was unable to serve this request. Common reasons include:
+
+You recently created a service and it has not yet completed a successful deploy.
+Your application has crashed or failed its health check.
+CHECK DASHBOARD VIEW SYSTEM STATUS
+
+move on.
+
+how to deploy to render.com
+youtube video
+https://www.youtube.com/watch?v=bnCOyGaSe84
+https://community.render.com/t/ruby-on-rails-project-deploy-failure-ruby-version-on-render-issue/9682
+https://render.com/docs/ruby-version
+
+Specifying a Ruby Version
+
+The default Ruby version is listed along with the other supported Native Environments.
+
+You can customize the Ruby version for your app by adding a .ruby-version file or by setting the ruby directive in your Gemfile. If a version is set in both places .ruby-version will take priority.
+
+To avoid any version mismatch confusion it can help to a single version set in .ruby-version and have the Gemfile read from it, for example:
+
+Your .ruby-version could look like this:
+
+3.1.2
+Then the Gemfile can reference .ruby-version via the ruby directive:
+
+ruby File.read('.ruby-version').strip
+
+sh. try another service provider.
+
+railway.com or railway.app
+https://railway.app/verify
+Verify your Free Plan account to deploy code and increase your available resource limits to 512 of Memory and 0.5 vCPU
+Here's a summary of the things you need to know, or all the details in Full ToS ↗
+
+13
+Be at least 13 years or older
+
+Railway will email you
+
+Railway can communicate to other services on your behalf like GitHub
+
+We are granted a license to use any contributions on our public repos
+
+You are responsible for what you host on Railway
+
+Railway is provided to you "as-is"
+
+©
+We comply with copyright takedown requests
+
+We will try to notify you when these terms change
+Hosting or distributing any of the following items will ban your account permanently.
+
+Mirrors / Userbots
+
+Crypto Miners
+
+©
+DMCA Protected Content
+
+Torrent Aggregators
+
+VNC / Virtual Desktops
+
+Anything Illegal
+
+
+deploying
+newsletter-signup-api
+says it failed. mabye because there is no code there.
+
+log:
+context: 381e46e2800faafcd8bd6417cb5f2b93
+Nixpacks build failed
+
+
+Nixpacks was unable to generate a build plan for this app.
+Please check the documentation for supported languages: https://nixpacks.com
+
+The contents of the app directory are:
+
+README.md
+
+ https://nixpacks.com/docs/getting-started
+
+ Save this in a file called railway.json to codify your deployments config.
+
+Visit Docs ↗
+Format
+
+JSON
+
+{
+  "$schema": "https://railway.app/railway.schema.json",
+  "build": {
+    "builder": "NIXPACKS"
+  },
+  "deploy": {
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 10
+  }
+}
+
+
+sh. move on with the video.
+watch and notes.
+
+
+video 2.35
+look at getting started.
+step by step guide
+choose node.js
+download heroku command line interface.
+install
+sh. mabye join.
+
+just make teh notess.
+use the heroku command from hyper.
+
+write:
+heroku login
+use the heroku password.
+do version checks.
+write item, eg: heroku --version
+
+
+
+https://docs.railway.app/
+
+
+quickstart guide.
+
+In this guide we will deploy a simple To-Do App running NextJS and Prisma using a template.
+
+sh. just note on the video.
+https://devcenter.heroku.com/start
+sh: follow the video. then do it on railway for free.
+or give up and move on.
+just finihsh the video and notes is the first thing to do.
+
+next.
+works for any version of node greater than 8. check Version
+node --Version
+
+npm is installed with node.
+check npm --version.
+if version it's installed.
+check git.
+git --Version
+
+
+Secure Your Account
+Heroku requires that you enroll in Multi-Factor Authentication (MFA) for an extra layer of protection for your Heroku account.
+https://www.youtube.com/watch?v=8aOHeJhWc9o
+salesforce authenticator
+https://www.youtube.com/watch?v=JQIKobOcQ9k
+
+Railway
+https://www.youtube.com/watch?v=DyQz2DgSToU
+click
+
+sh. github might nto have updated. try again on railway.
+
+confirm.
+
+prepare app. use their sample app.
+see the code on github.
+
+but we want to deploy our current app.
+
+sh. just quickly going through railway.app quick start.
+
+https://docs.railway.app/getting-started
+deploy Next JS Prisma Template
+it copied a repository to mine:
+https://github.com/steven-14/nextjs
+https://nextjs-production-2745.up.railway.app/
+
+it works.
+says:
+Todos
+NextJS app connected to Postgres using Prisma and hosted on Railway
+add buy some milk
+says it's loading.
+
+https://docs.railway.app/getting-started
+
+Congrats! After the initial deployment finalizes,
+your web server is nearly ready to go.
+All you now need to do is just to Generate a Domain
+
+When you click deploy, Railway will create a repo using the NextJS Prisma template as the source on your linked GitHub account and kick off an initial deploy after the project is created.
+Congrats! After the initial deployment finalizes, your web server is nearly ready to go. All you now need to do is just to Generate a Domain
+
+Screenshot of adding Service Domain
+After doing this, click on the deployment and navigate to your deployment to see the app live. In the next step, we will personalize your new web app.
+https://docs.railway.app/deploy/exposing-your-app
+
+Exposing Your App
+Before your application can say hello, Railway needs to know the IP and port that your application is listening on, in order to expose it to the internet.
+
+The easiest way to get up and running is to have your application listen on 0.0.0.0:$PORT, where PORT is a Railway-provided environment variable.
+
+Alternatively, you can manually override the PORT environment variable by adding PORT to your projects variables page. (Command + K and type Variables or you can use the keyboard shortcut: G + V under your selected project)
+
+
+savea alternate document here:
+E:\desktop\bootcamp_ayu\web_development\S20 APIs - Application Programming Interfaces
+C:\Users\Steven\Desktop\Newsletter-Signup
+C:\Users\Steven\Desktop\Newsletter-Signup\Alt Host - Staru Up -  Railway
+
+sh. here:
+https://railway.app/project/7aacdb26-f847-4ba9-863c-b4243004ee47
+https://blog.logrocket.com/3-free-heroku-alternatives-deploy-node-js/
+
+sh. i don't think i have a choice but to
+pay for heroku. since it will slow me down.
+look at next lessons to see if i need it.
+
+
+Secure Your Account
+Heroku requires that you enroll in Multi-Factor Authentication (MFA) for an extra layer of protection for your Heroku account.
+
+Enroll using Salesforce Authenticator, Google Authenticator or your favorite app.
+
+Remember to create backup verification methods by visiting Account Settings.
+
+***** AFTER SUBSCRIPTION TO HEROKU *****
+MAKE A CONTENTS ENETRY FOR THIS title
+
+i subscribed to heroku eco for 4.13 per month.
+i can remove it if i want.
+i may also probably put database suff on there.
+
+fom laptop.
+restarting this module having subscribed to heroku.
+
+
+We strongly recommend registering multiple verification methods so that you can always access your account. For example, if you’re using a mobile authenticator app as your primary verification method, it’s a good idea to also generate temporary recovery codes in case you forget or lose your mobile device.
+
+Visit Account Settings
+
+https://dashboard.heroku.com/account
+
+i made recovery codes and put them on encrypted thumbdrive.
+2:21 / 18:38
+is signing up part oft eh videeo.
+says documents here:
+https://devcenter.heroku.com/
+click get started to see step by step guide
+for 1st app.
+https://devcenter.heroku.com/start
+choose node js and use the guide
+https://devcenter.heroku.com/articles/getting-started-with-nodejs
+click i'm ready to started
+https://devcenter.heroku.com/articles/getting-started-with-nodejs
+https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up
+Set up
+The Heroku CLI requires Git...
+In this step you’ll install the Heroku Command Line Interface
+When installation completes, you can use the heroku command from your terminal.
+heroku installed but hyper not command
+heroku login not known
+video:
+https://www.youtube.com/watch?v=fpEgZi3_RI4
+git cmd says it's installed.
+restart hyper and now it works.
+3:44 / 18:38
+video says heroku --Version
+node must be >8
+check, node and npm version.
+check git.
+git --Version. yes.
+
+click i have installed these.
+sh. tried heroku login again.
+press any key to open the browser.
+Logged In
+You can close this page and return to your CLI (command line interface).
+It should now be logged in.
+
+This authentication is required for both the heroku
+and git commands to work correctly.
+
+If you’re behind a firewall that requires use of a proxy to connect with external HTTP/HTTPS services, you can set the HTTP_PROXY or HTTPS_PROXY environment variables
+https://devcenter.heroku.com/articles/using-the-cli#using-an-http-proxy
+https://devcenter.heroku.com/articles/using-the-cli#using-an-http-proxy
+in your local development environment before running the heroku command.
+
+click i have installed these.
+https://devcenter.heroku.com/articles/getting-started-with-nodejs#prepare-the-app
+
+If you are new to Heroku, it is recommended that you complete this tutorial using the Heroku-provided sample application.
+https://devcenter.heroku.com/articles/preparing-a-codebase-for-heroku-deployment
+example code:
+https://github.com/heroku/node-js-getting-started
+
+but angela wants to run the newsletter code.
+prepare own app.
+need update app.js
+listen not on local.
+listen on
+it might pick port for your port for you,
+
+you must change to this for that to work.
+
+code:
+app.listen(process.env.PORT || 3000, function(){
+console.log("Server is running in port 3000")
+});
+
+it's a dynamic port and changes by heroku.
+that works wiht their systeem.
+now if run using local host our pc won't know
+what to do.
+
+if want to test local and on heroku.
+tell app to listen to heroku or 3000
+
+app.listen(process.env.PORT || 3000, function(){
+console.log("Server is running in port 3000")
+});
+
+this part
+|| 3000,
+
+7:03 / 18:38
+
+next change, create a proc file.
+heroku checks this to knwo how to launch our app.
+was using nodemon but normally would used
+node and server name.
+
+this format:
+
+web: node
+https://devcenter.heroku.com/articles/preparing-a-codebase-for-heroku-deployment#3-add-a-procfile
+web: node app.js
+
+sh. pause now.
+
+7:46 / 18:38
+
+
+02/03
+https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up
+sh. her page says
+web: node index.js
+mine says: web: npm start (for the example)
+
+we've been using nodemon to launch but would use
+this for server.
+
+we need to specify this format.
+web: is the process type, then the command launch app.
+https://devcenter.heroku.com/articles/procfile
+
+web: node app.js
+in hyper, touch Procter.
+in procter:
+web: node app.js
+
+then must upload to git.
+must be in newsletter folder.
+can navigate hyper by dragging that folder.
+
+sh. remove notes and api keys... first.
+
+type: git init.
+lets you save all versions. like essay version 1, 2.
+message:
+Initialized empty Git repository in C:/Users/Steven/Desktop/Newsletter-Signup/.git/
+
+git add .
+git comit -m "First Comit"(means starting a new version. v1)
+https://devcenter.heroku.com/articles/getting-started-with-nodejs#prepare-the-app
+
+next deploy app
+
+use
+heroku create
+(must be logged in)
+if everything green and blue, that's fine.
+
+
+$ heroku create
+
+sh.message:
+ »   Warning: heroku update available from 7.53.0 to 7.68.2.
+Creating app... done, ⬢ agile-plateau-34886
+https://agile-plateau-34886.herokuapp.com/ | https://git.heroku.com/agile-plateau-34886.git
+end message.
+
+in browser:
+https://agile-plateau-34886.herokuapp.com
+message on heroku page:
+Heroku | Welcome to your new app!
+Refer to the documentation if you need help deploying.
+https://devcenter.heroku.com/
+12:42 / 18:38
+
+
+
+sh. the git folder is here, and it is hidden.
+view options, view show hidden files.
+C:\Users\Steven\Desktop\Newsletter-Signup\.git
+i hid them again.
+
+
+03/03
+
+git push heroku master
+says wait 5 m for it to load and then refresh previous page.
+
+then when test sign up, should say you've been signed up...
+sh. can do a test that is given on heroku.
+or suggest just redo the code and get the keys properly working.
+should say awesome! you've been signed up...
+if not workign, check heroku logs, hyper,
+eg: if did not change to port process.env.port
+or might be some misspellings, look at logs.
+
+sh. the screen shows the sign up screen properly.
+message:
+Nope
+You weren't signed up
+There was a problem signing you up. Please try again.
+
+sh: move on. there is likely working code in other lessons.
+
+in chrome:
+return Promise.reject(new Error("fetchCrossrefData is not allowed"))
+sh. just move on. this is a test and i want to move on.
+sh. i think it's the area uk is not done correctly.
+
+moving on now
+
+use heroki example api if want to do it properly.
+https://devcenter.heroku.com/categories/nodejs-support
+https://mailchimp.com/developer/marketing/docs/errors/
+angela. when fix. repeat previous git commands.
+
+252. Tip from Angela - Location, Location, Location!
+
+students.
+when try self, proejct, or code challenge, why not learned.
+answer: the learning comes from practice. only then you learn.
+watch, notes, gist, pause, try complete yourself.
+
+psychology
+dunning kerger effect
+
+as you learn more, think more, then imposter syndrome.
+both are exaggerations, you in between. keep learning adn practicing.
+keep going.
+to push updates to heroku:
+git add .
+git commit -m "changes"
+git push heroku master
+
+end git commands.
+
+sh. maybe do openai app on heroku. and for my fans.
+
+appbrewery.co/newsletter can get their newsletter.
+
+next. github and git. version control.
+
+
+
+
+
+Section 21: Git, Github and Version Control
+
+253. Introduction to Version Control and Git
+
+x-code and command line, how to make, merge, fork.
+
+version control.
+code, put under version control using git. save v1.
+after, more lines, another save point v2.
+then v3 is wrong.
+can compare v3 to previous,
+or roll back to v2, v1, or even forwards.
+
+next version control on command line.
+
+254. Version Control Using Git and the Command Line
+
+open terminal and go to desktop.
+
+$ cd desktop
+$ mkdir Story
+$ cd story
+$ ls
+$ touch chapter1.txt
+$ open chapter1.txt
+bash: open: command not found
+for windows
+$ start chapter1.txt
+
+or
+vim chapter1.txt (i think that's linux or ios)
+
+write in c1.
+This is the best day ever.
+next use git  to track
+git initial
+can't see, but if use ls -a shows.
+
+we are in story directory,
+also called the working directory.
+must add the file to a staging area, an intermediate place,
+where you choose what to commit.
+use git status commands
+git status
+result:
+$ git status
+On branch master
+
+No commits yet
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        chapter1.txt
+
+nothing added to commit but untracked files present (use "git add" to track)
+end result
+ shows untracked files in red. simply inside working directory,
+ but not yet in staging area.
+ to add it adn track changes, use
+ git add
+ git add chapter1.txt
+ git status whos in green.
+ ready to be commited.
+git commit -m "Initial commit. Complete chapter 1.about what change between versions"
+written in the present tense. convention.
+git log sees what commits made.
+
+now create more chapters.
+c1, c3.
+change some of the text.
+c2: it is a very nice day.
+c3: it is a lovely day.
+
+moving on now
+
+7:00 / 15:02
+
+project log. 1h.
+
+moving on now
+
+7:27 / 15:02
+
+git status
+register c2 and c3.
+git add . (means everything in story directory.)
+git commit -m "chapter 2 and chapter 3 added"
+git log
+two commits with different hashes.
+we are at (HEAD) master.
+
+summary
+
+created file in working directory in story directory.
+that's where initialize repository (story).
+now git track changes between wd and local repository.
+used git add . to push to staging area.
+staging area is necessary, because might not want
+every file to be commited so that's when we decide.
+then commit using git commit -m "change".
+that version is given a name in the commit.
+then could use git checkout to revert back.
+
+11:51 / 15:02
+
+05/03
+
+project log 1 1/2 h
+
+Again
+working directory (initialized repository)
+staging area (before commit to local repository)
+local repository (a version)
+
+now show what a roll back looks like in hyper.
+
+eg: working c3 messed up. have saved the file.
+have version control and git enabled.
+revert changes made.
+
+git status to that we have modifications in c3 not yet committed.
+so we can revert back to previous.
+
+before that use git command to see differences between
+c3 now and previous.
+sh: change c3. then:
+git diff chpater3.txt
+
+sh. then get:
+$ git diff chapter3.txt
+diff --git a/chapter3.txt b/chapter3.txt
+index d401f0d..f8753fe 100644
+--- a/chapter3.txt
++++ b/chapter3.txt
+@@ -1 +1,2 @@
+-it is a lovely day.
+\ No newline at end of file
++i have changed chapter 3 to see if i can revert back to
++the previous version.
+end copy.
+
+see the part in red was deleted and the part in green
+is the new part.
+
+maybe on few mistakes new v3. just want to copy some
+things over. or have a look.
+or might want to delete the new file.
+command git checkout chapter3.txt
+this rolls back to the last version.
+
+sh. see that it changed back to
+it is a lovely day.
+
+in this lesson looked mostly local implementataions of git.
+
+next lesson github remote repositories.
+
+255. GitHub and Remote Repositories
+
+last lesson. local.
+this lesson how create remote repository on someone
+elses computer or server.
+have heard of github. make an account.
+sign in and create repository
+
+GitHub
+click new repository
+name my masterpiece.
+default is public.
+can make private. requires a subscription on github.
+sh. no it doesn't.
+see others public repository.
+how they code their style.
+
+sh: note solutions to bootcamp other source
+https://github.com/sdkdeepa/Udemy-web-bootcamp
+https://github.com/anandb7248/Web_Development_Bootcamp
+https://github.com/brainvat/Angela-Yu-Web-Bootcamp-2020
+
+
+sh. resources:
+https://www.appbrewery.co/p/web-development-course-resources
+https://github.com/contentful/the-example-app.nodejs
+https://github.com/contentful/the-example-app.nodejs
+
+sh. i added cheat sheets from resources to story folder.
+it needs to go in web folder.
+copied here:
+C:\Users\toshiba\Desktop\bootcamp_ayu\web development\S20 APIs - Application Programming Interfaces
+and into sharing. usb.
+
+i made the new repository private.
+eg: repositories on swift flappy bird.
+can look at the code.
+
+you might want to contribute in a team.
+leave initialize readme.
+create repository.
+
+shows two wasy to make it.
+github for desktop.
+
+quick setup. not noted.
+
+sh. from gitub
+echo "# My-Masterpiece" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin git@github.com:steven-14/My-Masterpiece.git
+git push -u origin main
+end
+
+and
+…or create a new repository on the command line
+
+or use the command line instructions.
+going to push from local repository.
+to this remote repository.
+need to copy addres repository
+and use
+
+going to push from local repository.
+
+git remote add origin git@github.com:steven-14/My-Masterpiece.git
+git branch -M main
+git push -u origin main
+
+copy this:
+git@github.com:steven-14/My-Masterpiece.git
+
+end.
+
+in workign directory.
+git log
+push both commits.
+samsung charger is 15w wried. qc2.
+https://www.argos.co.uk/product/4885001?clickSR=slp:term:usb%20c%20phone%20charger:1:130:1
+this says it's compatible with that.
+so it's 15 w?
+says slow charge.
+Great for the price but slow charge
+From the information we have available I can confirm this USB-C Mains Charger and Cable does not have fast charge capabilities it is just a standard charger.
+Thank you for using Q&A
+Answered by LH
+sh: just get a lead?
+5 watts
+How much electricity does a phone charger use? Generally, phone chargers use about 5 watts (W) of electricity. Some faster chargers can use up to 20 W, but the majority of standard chargers are more around the 5 W range.
+i think mine are 3 or 4 watts. amazon is 4 watts.
+i could use a belkin from argos for £15 and it's safe. it's 20 w
+https://www.argos.co.uk/product/9336720?clickSR=slp:term:usb%20c%20phone%20charger:2:130:1
+it's safe to use in 15w phone.
+i paid 80 for phone.
+now 15 for charger.
+or just get a 4 lead.
+
+Don’t waste your money. Claims to go from 0-50 in 24 minutes, mine went from 18-30 in 26… maybe works if you have a special fast charge cable but that’s an added expense to pay out for. Doesn’t work with a normal cable. And the plus itself is quite bulky as well.
+
+bought this because I was previously spending 12 hours charging my new iPad Air 2022 from low charge. I didn't appreciate that I needed a high wattage charger so searched around and found this plug and thought I'd try it and see. What a difference, takes less than two hours now to fully charge this device. I bought another as it was good value and a recognized brand. It would be even better if it was dual port but at this price I can't complain.
+
+i think both ends are usb-c. so you need a usb2,3 lead anyway.
+just buy a cheap one on ebay.
+
+
+
+
+create a remote repository on internet and I want
+to transer There
+git remote add origin (origin is the name of remote)
+can call what you want. that is convention.
+because most programmers used to conventional.
+
+past the url and enter.
+git remote add origin git@github.com:steven-14/My-Masterpiece.git
+git push - u origin master
+pushed local to remote using u flag option links them.
+then push to remote called origin branch master.
+
+git branch -M main
+git push -u origin main
+
+sh. i am getting errors and i want to stop.
+
+project log 1h.
+
+09/03
+git says this:
+https://github.com/steven-14/My-Masterpiece
+
+Quick setup — if you’ve done this kind of thing before
+or
+git@github.com:steven-14/My-Masterpiece.git
+Get started by creating a new file or uploading an existing file. We recommend every repository include a README, LICENSE, and .gitignore.
+
+…or create a new repository on the command line
+echo "# My-Masterpiece" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin git@github.com:steven-14/My-Masterpiece.git
+git push -u origin main
+…or push an existing repository from the command line
+git remote add origin git@github.com:steven-14/My-Masterpiece.git
+git branch -M main
+git push -u origin main
+
++ 21m.
+
+sh. after this:
+git remote add origin git@github.com:steven-14/My-Masterpiece.git
+error: remote origin already exists
+https://stackoverflow.com/questions/1221840/remote-origin-already-exists-on-git-push-to-a-new-repository
+sh. just continue and see.
+
+$ git push -u origin main
+The authenticity of host 'github.com (140.82.121.4)' can't be established.
+ED25519 key fingerprint is SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])?
+
+arning: Permanently added 'github.com' (ED25519) to the list of known hosts.
+git@github.com: Permission denied (publickey).
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+
+https://stackoverflow.com/questions/25927914/git-error-please-make-sure-you-have-the-correct-access-rights-and-the-reposito
+
+sh: try a while longer. 1/4 h. if it doesn't work,
+use git desktop.
+
+sh. remove the extra files from story and put in story extras.
+
+Q&a
+Sofia
+117 upvotes
+2 years ago
+Do this:
+
+git init
+
+git add .
+
+git commit -m "blabla"
+
+* Here go to Github and create a repository *
+
+* Copy the repository's link * = LINK
+
+git remote add origin LINK
+
+git push -u origin master
+
+sh. using git desktop.
+add repository story.
+
+publish branch
+
+Authentication failed. Some common reasons include:
+
+- You are not logged in to your account: see File > Options.
+- You may need to log out and log back in to refresh your token.
+- You do not have permission to access this repository.
+- The repository is archived on GitHub.
+Check the repository settings to confirm
+you are still permitted to push commits.
+- If you use SSH authentication, check that your key
+is added to the ssh-agent and associated with your account.
+- If you use SSH authentication, ensure the host key verification
+passes for your repository hosting service.
+- If you used username / password authentication,
+you might need to use a Personal Access Token instead of your account password.
+Check the documentation of your repository hosting service.
+
+signed out and in.
+
+same message again.
+
+https://stackoverflow.com/questions/32238616/git-push-fatal-origin-does-not-appear-to-be-a-git-repository-fatal-could-n
+irst, check that your origin is set by running
+
+git remote -v
+This should show you all of the push / fetch remotes for the project.
+
+If this returns with no output, skip to last code block.
+
+output
+origin  git@github.com:steven-14/My-Masterpiece.git (fetch)
+origin  git@github.com:steven-14/My-Masterpiece.git (push)
+
+Verify remote name / address
+
+If this returns showing that you have remotes set, check that the name of the remote matches the remote you are using in your commands.
+
+$git remote -v
+myOrigin ssh://git@example.com:1234/myRepo.git (fetch)
+myOrigin ssh://git@example.com:1234/myRepo.git (push)
+
+# this will fail because `origin` is not set
+$git push origin main
+
+# you need to use
+$git push myOrigin main
+If you want to rename the remote or change the remote's URL,
+you'll want to first remove the old remote, and then add the correct one.
+
+sh. try delete repository and use git desktop to upload it.
+done.
+now try add it using git desktop.
+
+https://stackoverflow.com/questions/57947268/how-do-i-log-in-using-the-git-terminal
+
+start the video again.
+it's supposed to be called story, description is my masterpiece.
+make it public
+not initialize readme.
+create repos.
+
+message 2 ways setup using git DESKTOP
+we use command line instructions.
+on there.
+copy address
+git@github.com:steven-14/Story.git
+
+she says use:
+git remote add origin git@github.com:steven-14/Story.git
+git push -u origin master
+
+but github says use:
+git remote add origin git@github.com:steven-14/Story.git
+git branch -M main
+git push -u origin main
+
+sh: use github method.
+
+inside story directory in hyper
+git log
+lists all commits (sh. including those i made today)
+
+create remote
+git remote add origin git@github.com:steven-14/Story.git
+message already exists.
+
+git push -u origin main
+
+$ git push -u origin main
+git@github.com: Permission denied (publickey).
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+
+code pushes local to remote using -u option (links them)
+then push remote called origin and branch named master (main).
